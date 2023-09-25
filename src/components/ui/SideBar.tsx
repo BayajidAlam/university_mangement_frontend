@@ -8,7 +8,7 @@ import { sideBarItems } from "@/constants/sidebaritems";
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const role = USER_ROLE.SUPER_ADMIN;
+  const role = USER_ROLE.ADMIN;
 
   return (
     <Sider
