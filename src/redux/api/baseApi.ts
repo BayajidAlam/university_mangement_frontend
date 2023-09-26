@@ -7,6 +7,6 @@ export const baseApi = createApi({
   reducerPath: 'pokemonApi',
   baseQuery: axiosBaseQuery({ baseUrl: getBaseUrl() }),
   endpoints: () => ({}),
-  tagTypes: ['users']
+  tagTypes: ['user']
 })
 
