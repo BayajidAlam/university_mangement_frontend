@@ -41,6 +41,10 @@ const FormSelectField = ({
             onChange={onChange}
             options={options}
             value={value}
+            style={{
+              width: "100%",
+            }}
+            placeholder={placeholder}
           />
         )}
       />
