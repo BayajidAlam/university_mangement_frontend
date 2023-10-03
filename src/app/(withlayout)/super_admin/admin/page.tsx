@@ -23,7 +23,7 @@ const ManageAdmin = () => {
         ]}
       />
        <ActionBar title="Admin List">
-        <Link href={`/${role}/manage-faculty/create`}>
+        <Link href={`/${role}/admin/create`}>
           <Button type="primary">Create</Button>
         </Link>
       </ActionBar>
