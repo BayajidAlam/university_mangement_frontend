@@ -207,7 +207,11 @@ const CreateAdminPage = () => {
                   marginBottom: "10px",
                 }}
               >
-               <FormDatePicker name="admin.dateOfBirth" label="Date of Birth" size="large"/>
+                <FormDatePicker
+                  name="admin.dateOfBirth"
+                  label="Date of Birth"
+                  size="large"
+                />
               </Col>
               <Col
                 className="gutter-row"

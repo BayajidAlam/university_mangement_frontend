@@ -1,3 +1,5 @@
+'use client'
+
 import StepperForm from "@/components/StepperForm/SteperForm";
 import BasicInfo from "@/components/StudentForms/BasicInfo";
 import GuardianInformation from "@/components/StudentForms/GuardianInformation";

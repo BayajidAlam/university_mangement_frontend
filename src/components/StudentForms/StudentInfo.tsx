@@ -5,7 +5,13 @@ import FormSelectField from "../Forms/FormSelectField";
 import UploadImage from "../ui/UploadImage";
 import { Col, Row } from "antd";
 import FormInput from "../Forms/FormInput";
-import { departmentOptions, genderOptions } from "@/constants/global";
+import {
+  AcademicDepartmentOptions,
+  AcademicFacultyOptions,
+  AcademicSemesterOptions,
+  departmentOptions,
+  genderOptions,
+} from "@/constants/global";
 
 const StudentInfo = () => {
   return (
@@ -15,6 +21,7 @@ const StudentInfo = () => {
         borderRadius: "5px",
         padding: "15px",
         marginBottom: "10px",
+        marginTop: "20px",
       }}
     >
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
@@ -60,7 +67,13 @@ const StudentInfo = () => {
             label="Last Name"
           />
         </Col>
-        <Col className="gutter-row" span={6}>
+        <Col
+          className="gutter-row"
+          span={6}
+          style={{
+            marginBottom: "10px",
+          }}
+        >
           <FormInput
             type="password"
             name="password"
@@ -68,32 +81,74 @@ const StudentInfo = () => {
             label="Password"
           />
         </Col>
-        <Col className="gutter-row" span={8}>
+        <Col
+          className="gutter-row"
+          span={8}
+          style={{
+            marginBottom: "10px",
+          }}
+        >
           <FormSelectField
             size="large"
             name="student.academicDepartment"
             label="Academic Department"
-            options={genderOptions}
+            options={AcademicDepartmentOptions}
             placeholder="Select"
           />
         </Col>
-        <Col className="gutter-row" span={8}>
+        <Col
+          className="gutter-row"
+          span={8}
+          style={{
+            marginBottom: "10px",
+          }}
+        >
           <FormSelectField
             size="large"
             name="student.academicFaculty"
             label="Academic Faculty"
-            options={genderOptions}
+            options={AcademicFacultyOptions}
             placeholder="Select"
           />
         </Col>
-        <Col className="gutter-row" span={8}>
+        <Col
+          className="gutter-row"
+          span={8}
+          style={{
+            marginBottom: "10px",
+          }}
+        >
           <FormSelectField
             size="large"
             name="student.academicSemester"
             label="Academic Semester"
+            options={AcademicSemesterOptions}
+            placeholder="Select"
+          />
+        </Col>
+        <Col
+          className="gutter-row"
+          span={8}
+          style={{
+            marginBottom: "10px",
+          }}
+        >
+          <FormSelectField
+            size="large"
+            name="student.gender"
+            label="Gender"
             options={genderOptions}
             placeholder="Select"
           />
+        </Col>
+        <Col
+          className="gutter-row"
+          span={8}
+          style={{
+            marginBottom: "10px",
+          }}
+        >
+          <UploadImage />
         </Col>
       </Row>
     </div>

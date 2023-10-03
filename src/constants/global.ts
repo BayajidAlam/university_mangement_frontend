@@ -64,3 +64,78 @@ export const bloodGroupOptions = [
     value: "O-",
   },
 ];
+
+export const AcademicFacultyOptions = [
+  {
+    label: "Engineering",
+    value: "engineering",
+  },
+  {
+    label: "Science",
+    value: "science",
+  },
+  {
+    label: "Business",
+    value: "business",
+  },
+  {
+    label: "Arts",
+    value: "arts",
+  },
+];
+
+export const AcademicDepartmentOptions = [
+  {
+    label: "Computer Science",
+    value: "computer_science",
+  },
+  {
+    label: "Mathematics",
+    value: "mathematics",
+  },
+  {
+    label: "Physics",
+    value: "physics",
+  },
+  {
+    label: "Chemistry",
+    value: "chemistry",
+  },
+  {
+    label: "Business Administration",
+    value: "business_administration",
+  },
+  {
+    label: "Economics",
+    value: "economics",
+  },
+  {
+    label: "Psychology",
+    value: "psychology",
+  },
+  {
+    label: "History",
+    value: "history",
+  },
+];
+
+export const AcademicSemesterOptions = [
+  {
+    label: "Fall",
+    value: "fall",
+  },
+  {
+    label: "Spring",
+    value: "spring",
+  },
+  {
+    label: "Summer",
+    value: "summer",
+  },
+  {
+    label: "Winter",
+    value: "winter",
+  },
+];
+
+
