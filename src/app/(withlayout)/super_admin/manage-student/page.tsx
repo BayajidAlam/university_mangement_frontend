@@ -25,7 +25,7 @@ const ManageStudents = () => {
         ]}
       />
       <ActionBar title="Student List">
-        <Link href={`/${role}/manage-faculty/create`}>
+        <Link href={`/${role}/manage-student/create`}>
           <Button type="primary">Create</Button>
         </Link>
       </ActionBar>
