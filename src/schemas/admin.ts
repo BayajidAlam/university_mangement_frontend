@@ -11,17 +11,19 @@ export const adminSchema = yup.object().shape({
     email: yup.string().email().required("Email is required"),
     designation: yup.string().required("Designation is required"),
     dateOfBirth: yup.string().required("Date Of Birth is required"),
+    gender: yup.string().required("Gender is required"),
+    bloodGroup: yup.string().required("Blood Group is required"),
+    contactNo: yup.string().required("Contact No is required"),
+    emergencyContactNo: yup.string().required("Emergency Contact No is required"),
+    presentAddress: yup.string().required("Present Address is required"),
+    permanentAddress: yup.string().required("Permanent Address is required"),
+    managementDepartment: yup.string().required("Management Department is required"),
+    profileImage: yup.string().required("Profile Image is required"),
   }),
 });
 
 
-//     "dateOfBirth": "12-12-1994",
-//     "gender": "male",
-//     "bloodGroup": "O+",
-//     "contactNo": "admin_5",
-//     "emergencyContactNo": "01600000000",
-//     "presentAddress": "Dhaka",
-//     "permanentAddress": "Dhaka",
-//     "managementDepartment": "64cd44da02f799152d4d1ca5",
-//     "designation": "HR Manager",
-//     "profileImage": "limk"
+
+
+
+
