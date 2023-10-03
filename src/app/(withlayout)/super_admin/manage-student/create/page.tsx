@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import StepperForm from "@/components/StepperForm/SteperForm";
 import BasicInfo from "@/components/StudentForms/BasicInfo";
@@ -26,6 +26,14 @@ const CreateStudent = () => {
     },
   ];
 
+  const handleStudentSubmit = async (data: any) => {
+    try {
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div
       style={{
@@ -33,7 +41,7 @@ const CreateStudent = () => {
       }}
     >
       <h1>Create student</h1>
-      <StepperForm steps={steps} />
+      <StepperForm submitHandler={(value)=>handleStudentSubmit(value)} steps={steps} />
     </div>
   );
 };
