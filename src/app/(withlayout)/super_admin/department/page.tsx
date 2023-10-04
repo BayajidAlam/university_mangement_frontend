@@ -1,10 +1,13 @@
 "use client";
 
-// imports 
+// imports
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UMTable from "@/components/ui/UMTable";
-import { useDepartmentsQuery } from "@/redux/api/departmentApi";
+import {
+  useDeleteDepartmentMutation,
+  useDepartmentsQuery,
+} from "@/redux/api/departmentApi";
 import { useDebounced } from "@/redux/hook";
 import {
   DeleteOutlined,
@@ -12,10 +15,10 @@ import {
   EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
-
+import dayjs from "dayjs";
 
 const ManageDepartment = () => {
   // query
@@ -28,32 +31,33 @@ const ManageDepartment = () => {
   const [sortOrder, setSortOrder] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // assign to query 
+  // assign to query
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   // query["searchTerm"] = searchTerm;
 
-  // create debounce hook 
+  // create debounce hook
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
-    delay: 600
-  })
+    delay: 600,
+  });
 
-  // set debounce on searchTem if debounce exist 
-  if(!!debouncedTerm){
-    query["searchTerm"] = debouncedTerm
+  // set debounce on searchTem if debounce exist
+  if (!!debouncedTerm) {
+    query["searchTerm"] = debouncedTerm;
   }
 
   // get department data
   const { data, isLoading } = useDepartmentsQuery({ ...query });
-  
+  // department delete hook
+  const [deleteDepartment] = useDeleteDepartmentMutation();
 
   const departments = data?.departments;
   const meta = data?.meta;
 
-  // define columns of table 
+  // define columns of table
   const columns = [
     {
       title: "Title",
@@ -62,6 +66,9 @@ const ManageDepartment = () => {
     {
       title: "Created At",
       dataIndex: "createdAt",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
       sorter: true,
     },
     {
@@ -69,19 +76,18 @@ const ManageDepartment = () => {
       render: function (data: any) {
         return (
           <>
-            <Button onClick={() => console.log(data)} type="primary">
-              <EyeOutlined />
-            </Button>
-            <Button
-              style={{
-                margin: "0px 5px",
-              }}
-              onClick={() => console.log(data)}
-              type="primary"
-            >
-              <EditOutlined />
-            </Button>
-            <Button onClick={() => console.log(data)} type="primary" danger>
+            <Link href={`/super_admin/department/edit/${data?.id}`}>
+              <Button
+                style={{
+                  margin: "0px 5px",
+                }}
+                onClick={() => console.log(data)}
+                type="primary"
+              >
+                <EditOutlined />
+              </Button>
+            </Link>
+            <Button onClick={() => deleteHandler(data?.id)} type="primary" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -90,15 +96,14 @@ const ManageDepartment = () => {
     },
   ];
 
-
-  // pagination 
+  // pagination
   const onPaginationChange = (page: number, pageSize: number) => {
     // console.log(page, pageSize);
     setPage(page);
     setSize(pageSize);
   };
 
-  // sortBy and sortOrder 
+  // sortBy and sortOrder
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
     // console.log(order, field);
@@ -111,6 +116,19 @@ const ManageDepartment = () => {
     setSortBy("");
     setSortOrder("");
     setSearchTerm("");
+  };
+
+  // delete a department
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting...");
+    try {
+      // console.log(data);
+      deleteDepartment(id);
+      message.success("Department deleted successfully");
+    } catch (err: any) {
+      console.error(err.message);
+      message.error(err.message);
+    }
   };
 
   return (
