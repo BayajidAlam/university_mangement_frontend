@@ -3,66 +3,44 @@
 import { Button, Table } from "antd";
 import React from "react";
 
-const UMTable = () => {
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      sorter: (a: any, b: any) => a.age - b.age,
-    },
-    {
-      title: "Action",
-      render: function (data: any) {
-        return (
-          <Button onClick={() => console.log(data)} type="primary" danger>
-            x
-          </Button>
-        );
-      },
-    },
-  ];
+type UMTableProps = {
+  loading?: boolean;
+  columns: any;
+  dataSource: any;
+  onTableChange?: (pagination: any, filter: any, sorter: any) => void;
+  pageSize?: number;
+  totalPages?: number;
+  showSizeChanger?: boolean;
+  onPaginationChange?: (page: number, pageSize: number) => void;
+  showPagination?: boolean;
+};
+const UMTable = ({
+  loading = false,
+  columns,
+  dataSource,
+  onTableChange,
+  pageSize,
+  totalPages,
+  showSizeChanger,
+  onPaginationChange,
+  showPagination = true,
+}: UMTableProps) => {
 
-  const tableData = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-    },
-  ];
-
-  const onPaginationChange = (page: number, pageSize: number) => {
-    console.log(page, pageSize);
-  };
-
-  const paginationConfig = {
-    pageSize: 5,
-    total: 10,
-    pageSizeOptions: [5, 10, 20],
-    showSizeChanger: true,
-    onChange: onPaginationChange,
-  };
-
-  const onTableChange = (pagination: any, filter: any, sorter: any) => {
-    const { order, field } = sorter;
-    console.log(order, field);
-  };
+  const paginationConfig = showPagination
+    ? {
+        pageSize: pageSize,
+        total: totalPages,
+        pageSizeOptions: [5, 10, 20],
+        showSizeChanger: showSizeChanger,
+        onChange: onPaginationChange,
+      }
+    : false;
 
   return (
     <Table
       loading={false}
       columns={columns}
-      dataSource={tableData}
+      dataSource={dataSource}
       pagination={paginationConfig}
       onChange={onTableChange}
     ></Table>
