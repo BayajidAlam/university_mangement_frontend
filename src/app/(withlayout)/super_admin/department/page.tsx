@@ -1,9 +1,11 @@
 "use client";
 
+// imports 
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UMTable from "@/components/ui/UMTable";
 import { useDepartmentsQuery } from "@/redux/api/departmentApi";
+import { useDebounced } from "@/redux/hook";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -13,6 +15,7 @@ import {
 import { Button, Input } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
+
 
 const ManageDepartment = () => {
   // query
@@ -25,18 +28,32 @@ const ManageDepartment = () => {
   const [sortOrder, setSortOrder] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
+  // assign to query 
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
-  query["searchTerm"] = searchTerm;
+  // query["searchTerm"] = searchTerm;
+
+  // create debounce hook 
+  const debouncedTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600
+  })
+
+  // set debounce on searchTem if debounce exist 
+  if(!!debouncedTerm){
+    query["searchTerm"] = debouncedTerm
+  }
 
   // get department data
   const { data, isLoading } = useDepartmentsQuery({ ...query });
-  console.log(data);
+  
+
   const departments = data?.departments;
   const meta = data?.meta;
 
+  // define columns of table 
   const columns = [
     {
       title: "Title",
@@ -73,15 +90,18 @@ const ManageDepartment = () => {
     },
   ];
 
+
+  // pagination 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log(page, pageSize);
+    // console.log(page, pageSize);
     setPage(page);
     setSize(pageSize);
   };
 
+  // sortBy and sortOrder 
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    console.log(order, field);
+    // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
