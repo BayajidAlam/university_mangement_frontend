@@ -1,9 +1,16 @@
 "use client";
 
+import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UMTable from "@/components/ui/UMTable";
 import { useDepartmentsQuery } from "@/redux/api/departmentApi";
-import { Button } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
+import { Button, Input } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -14,57 +21,76 @@ const ManageDepartment = () => {
   // states
   const [size, setSize] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  (query["limit"] = size), (query["page"] = page);
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
+  query["searchTerm"] = searchTerm;
 
   // get department data
   const { data, isLoading } = useDepartmentsQuery({ ...query });
-  const { departments, meta } = data;
+  console.log(data);
+  const departments = data?.departments;
+  const meta = data?.meta;
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Title",
+      dataIndex: "title",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      sorter: (a: any, b: any) => a.age - b.age,
+      title: "Created At",
+      dataIndex: "createdAt",
+      sorter: true,
     },
     {
       title: "Action",
       render: function (data: any) {
         return (
-          <Button onClick={() => console.log(data)} type="primary" danger>
-            x
-          </Button>
+          <>
+            <Button onClick={() => console.log(data)} type="primary">
+              <EyeOutlined />
+            </Button>
+            <Button
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => console.log(data)}
+              type="primary"
+            >
+              <EditOutlined />
+            </Button>
+            <Button onClick={() => console.log(data)} type="primary" danger>
+              <DeleteOutlined />
+            </Button>
+          </>
         );
       },
     },
   ];
 
-  const tableData = [
-    {
-      key: "1",
-      name: "Tonny Brown",
-      age: 32,
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-    },
-  ];
-
   const onPaginationChange = (page: number, pageSize: number) => {
     console.log(page, pageSize);
+    setPage(page);
+    setSize(pageSize);
   };
 
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
     console.log(order, field);
+    setSortBy(field as string);
+    setSortOrder(order === "ascend" ? "asc" : "desc");
+  };
+
+  // reset filters
+  const resetFilter = () => {
+    setSortBy("");
+    setSortOrder("");
+    setSearchTerm("");
   };
 
   return (
@@ -77,25 +103,44 @@ const ManageDepartment = () => {
           },
         ]}
       />
-      <h1>Department List</h1>
-      <Link href="/super_admin/department/create">
-        <Button
+      <ActionBar title="Department List">
+        <Input
+          type="text"
+          size="large"
+          placeholder="Search Department"
           style={{
-            margin: "10px",
+            width: "20%",
           }}
-          type="primary"
-        >
-          Create
-        </Button>
-      </Link>
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
+        />
+        <div>
+          <Link href="/super_admin/department/create">
+            <Button
+              style={{
+                margin: "10px",
+              }}
+              type="primary"
+            >
+              Create
+            </Button>
+          </Link>
+          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            <Button onClick={resetFilter} type="primary">
+              <ReloadOutlined />
+            </Button>
+          )}
+        </div>
+      </ActionBar>
 
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={tableData}
+        dataSource={departments}
         onTableChange={onTableChange}
-        pageSize={5}
-        totalPages={100}
+        pageSize={size}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         showPagination={true}
