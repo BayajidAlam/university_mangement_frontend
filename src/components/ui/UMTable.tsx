@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import React from "react";
 
 const UMTable = () => {
@@ -14,6 +14,17 @@ const UMTable = () => {
       title: "Age",
       dataIndex: "age",
       key: "age",
+      sorter: (a: any, b: any) => a.age - b.age,
+    },
+    {
+      title: "Action",
+      render: function (data: any) {
+        return (
+          <Button onClick={() => console.log(data)} type="primary" danger>
+            x
+          </Button>
+        );
+      },
     },
   ];
 
@@ -30,8 +41,21 @@ const UMTable = () => {
     },
   ];
 
-  const onPageSizeChange = (page: number, pageSize: number) => {
+  const onPaginationChange = (page: number, pageSize: number) => {
     console.log(page, pageSize);
+  };
+
+  const paginationConfig = {
+    pageSize: 5,
+    total: 10,
+    pageSizeOptions: [5, 10, 20],
+    showSizeChanger: true,
+    onChange: onPaginationChange,
+  };
+
+  const onTableChange = (pagination: any, filter: any, sorter: any) => {
+    const { order, field } = sorter;
+    console.log(order, field);
   };
 
   return (
@@ -39,13 +63,8 @@ const UMTable = () => {
       loading={false}
       columns={columns}
       dataSource={tableData}
-      pagination={{
-        pageSize: 5,
-        total: 10,
-        pageSizeOptions: [5, 10, 20],
-        showSizeChanger: true,
-        onChange: onPageSizeChange,
-      }}
+      pagination={paginationConfig}
+      onChange={onTableChange}
     ></Table>
   );
 };

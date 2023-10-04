@@ -16,11 +16,15 @@ const ManageDepartment = () => {
         ]}
       />
       <h1>Department List</h1>
-      <Link href="/super_admin/department/create">
-        <Button type="primary">Create</Button>
+      <Link
+        href="/super_admin/department/create"
+      >
+        <Button style={{
+          margin: "10px"
+        }} type="primary">Create</Button>
       </Link>
 
-      <UMTable/>
+      <UMTable />
     </div>
   );
 };
