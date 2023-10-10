@@ -32,14 +32,20 @@ const CreateAdminPage = () => {
     });
 
   const onSubmit = async (values: any) => {
+    console.log(values,"values");
     const obj = { ...values };
     const file = obj["file"];
+    console.log(
+    file,'file'
+    );
     delete obj["file"];
+    console.log(obj,"file");
     const data = JSON.stringify(obj);
     const formData = new FormData();
     formData.append("file", file as Blob);
     formData.append("data", data);
     message.loading("Creating...");
+    console.log(formData,'formData');
     try {
       await addAdminWithFormData(formData);
       message.success("Admin created successfully!");
@@ -67,7 +73,7 @@ const CreateAdminPage = () => {
       <h1>Create Admin</h1>
 
       <div>
-        <Form submitHandler={onSubmit} resolver={yupResolver(adminSchema)}>
+        <Form submitHandler={onSubmit} >
           <div
             style={{
               border: "1px solid #d9d9d9",

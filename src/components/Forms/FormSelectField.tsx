@@ -4,7 +4,7 @@ import { Input, Select } from "antd";
 import { type } from "os";
 import { useFormContext, Controller } from "react-hook-form";
 
-type SelectOptions = {
+export type SelectOptions = {
   label: string;
   value: string;
 };
