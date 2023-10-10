@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Button, message, Steps, theme } from "antd";
 import { FormProvider, useForm } from "react-hook-form";
 import { getFromLocalStorage, setToLocalStorage } from "@/utils/local-storage";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface ISteps {
   title?: string;

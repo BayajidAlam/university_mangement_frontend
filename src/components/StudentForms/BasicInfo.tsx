@@ -75,7 +75,7 @@ const BasicInfo = () => {
           }}
         >
           <FormDatePicker
-            name="admin.dateOfBirth"
+            name="student.dateOfBirth"
             label="Date of Birth"
             size="large"
           />
